@@ -1,0 +1,76 @@
+Tuning
+1. Babysit one model step by step
+2. Train models in parallel
+
+Batch Normalization
+-> more robust and easier to find hyperparameter
+-> Normalizing z
+for one layer z[l]i
+compute mü = 1/m sum(zi)
+	sigma**2= 1/m sum (zi-mü)**2
+	zinorm = (zi+mü)/sqrt(sigma**2+eps)
+	ztilde = gamma *zinorm + beta (learnable parameters)
+ 	-> for shifting mean and variances
+
+
+-> new for every mini batch-> slight noise -> slight regularization
+for test set exponentially weighted average of all minibatches
+
+Multi Class classification
+
+Softmax-Regression
+
+C = #classes
+4 output units P(0,x),P(1,x),P(2,x),P(3,x) sum of P = 1 (probabilities)
+
+Softmax activation function
+
+t = e**(z[l]) (4,1)
+a[l] = e**[l]/sum(ti, 1,4) , ai = ti / sum(ti,1-4)
+
+Softmax activation inputs and outputs a vector
+
+Training NN with softmax layer
+
+loss function
+
+=> - sum(yi * log( y^i ), 1 to C)
+
+Cost function
+
+1/m sum(losses)
+
+dz[L] = y^-y
+
+Tensorflow
+
+Basic Structure
+----------------------------------------------
+w = tf.Variable(0,dtype=tf.float32) (Variable=
+optimizer = tf.keras.optimizers.Adam(lr=0.1)
+
+def train_step(): 
+	with tf.GradiantTape() as tape:
+		cost = w**2 -10 * w + 25
+	trainable_variables = [w]
+	grads = tape.gradiant(cost, traibable_variables)
+	optimizer.apply_gradiants(zip(grads, trainable_variables))
+-----------------------------------------------------------------
+w = tf.Variable(0,dtype=tf.float32) 
+x = np.array([1,0,-10,0,-25.0], dtype=np.float)
+optimizer = tf.keras.optimizers.Adam(lr=0.1)
+
+def training(x,w,optimizer):
+
+	def cost_fn():
+		return x[0] * w **2 +x[1] * w + x[2]
+	for i in range (1000):
+		opimizer.minimize(cost_fn, [w])
+opimizer.minimize(cost_fn,[w])
+
+-----------------------------------------------------------------
+1. Create Tensors (variables) that are not yet executed/evaluated.
+2. Write operations between those Tensors.
+3. Initialize your Tensors.
+4. Create a Session.
+5. Run the Session. This will run the operations you'd written above.
