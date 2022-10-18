@@ -67,3 +67,10 @@ def training(x,w,optimizer):
 	for i in range (1000):
 		opimizer.minimize(cost_fn, [w])
 opimizer.minimize(cost_fn,[w])
+
+-----------------------------------------------------------------
+1. Create Tensors (variables) that are not yet executed/evaluated.
+2. Write operations between those Tensors.
+3. Initialize your Tensors.
+4. Create a Session.
+5. Run the Session. This will run the operations you'd written above.
